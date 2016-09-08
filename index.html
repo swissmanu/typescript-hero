@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Typescript Hero by buehler</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/buehler/typescript-hero">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/buehler/typescript-hero/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/buehler/typescript-hero/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Typescript Hero</h1>
+          <p>VSCode extension that aids you with your everyday work around typescript</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/buehler">buehler</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="typescript-hero" class="anchor" href="#typescript-hero" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Typescript Hero</h1>
+
+<p><code>typescript hero</code> is a vscode extension that makes your live easier.
+When you are coding a lot of <code>TypeScript</code> you may want vscode to automatically
+include your imports.</p>
+
+<p>If you search for this feature: here's the solution (and many more). Typescript hero will be extended
+in the future and there are many features in the pipeline that will enhance the way you
+work with typescript.</p>
+
+<h2>
+<a id="features-at-a-glance" class="anchor" href="#features-at-a-glance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features at a glance</h2>
+
+<ul>
+<li>Add imports of your project or libraries to your current file</li>
+<li>Add an import for the current name under the cursor</li>
+<li>Sort and organize your imports (sort and remove unused)</li>
+<li>Restart your debug session when your code changes</li>
+</ul>
+
+<h2>
+<a id="commands" class="anchor" href="#commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Commands</h2>
+
+<p>All commands are preceeded by <code>typescriptHero</code>.</p>
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Extension part</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>showCmdGui</code></td>
+<td>general</td>
+<td>Shows a small gui with all awailable internal commands</td>
+</tr>
+<tr>
+<td><code>resolve.addImport</code></td>
+<td>import resolver</td>
+<td>Shows a pick list with all recognized, importable symbols</td>
+</tr>
+<tr>
+<td><code>resolve.addImportUnderCursor</code></td>
+<td>import resolver</td>
+<td>Imports the symbol under the cursor</td>
+</tr>
+<tr>
+<td><code>resolve.organizeImports</code></td>
+<td>import resolver</td>
+<td>Removes unused imports and orders all imports</td>
+</tr>
+<tr>
+<td><code>resolve.rebuildCache</code></td>
+<td>import resolver</td>
+<td>Rebuilds the whole symbol cache (or index)</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="keybindings" class="anchor" href="#keybindings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Keybindings</h2>
+
+<p>The following commands are bound by default when the extension is installed.</p>
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Keybinding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>showCmdGui</code></td>
+<td><code>ctrl+alt+g</code></td>
+</tr>
+<tr>
+<td><code>resolve.addImport</code></td>
+<td><code>ctrl+alt+i</code></td>
+</tr>
+<tr>
+<td><code>resolve.addImportUnderCursor</code></td>
+<td><code>ctrl+alt+shift+i</code></td>
+</tr>
+<tr>
+<td><code>resolve.organizeImports</code></td>
+<td><code>ctrl+alt+o</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="settings" class="anchor" href="#settings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Settings</h2>
+
+<p>In the following tables, all possible settings are explained. If you find any
+settings that are not listed here, that means they are "beta" or "not implemented yet".</p>
+
+<p>All settings are preceeded by <code>typescriptHero</code>.</p>
+
+<h3>
+<a id="general" class="anchor" href="#general" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>General</h3>
+
+<p>These settings do not have a prefix.</p>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>verbosity</code></td>
+<td>The log level that the extension writes its messages to the output channel</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="import-resolver" class="anchor" href="#import-resolver" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Import resolver</h3>
+
+<p>The following settings do have the prefix <code>resolver</code>. So an example setting could be
+<code>typescriptHero.resolver.pathStringDelimiter</code>.</p>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pathStringDelimiter</code></td>
+<td>The string delimiter to use for the imports</td>
+</tr>
+<tr>
+<td><code>ignorePatterns</code></td>
+<td>If any of these strings is part of a file path, the file is ignored</td>
+</tr>
+<tr>
+<td><code>insertSpaceBeforeAndAfterImportBraces</code></td>
+<td>If the extension should place spaces into import braces (<code>{Symbol}</code> vs <code>{ Symbol }</code>)</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="debug-session-restarter" class="anchor" href="#debug-session-restarter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Debug session restarter</h3>
+
+<p>The following settings do have the prefix <code>restartDebugger</code>. So an example setting could be
+<code>typescriptHero.restartDebugger.watchFolders</code>.</p>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>watchFolders</code></td>
+<td>Which output folders should be watched to trigger a restart</td>
+</tr>
+<tr>
+<td><code>active</code></td>
+<td>If true, the debug restart is activated on startup</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Known Issues</h2>
+
+<p>Please visit <a href="https://github.com/buehler/typescript-hero/issues">the issue list</a> :-)</p>
+
+<h2>
+<a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release Notes</h2>
+
+<p>This section will cover the newest release, for the rest of the changelog,
+please visit the <a href="CHANGELOG.md">CHANGELOG.md</a></p>
+
+<p>TODO.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
