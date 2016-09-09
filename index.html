@@ -224,9 +224,35 @@ settings that are not listed here, that means they are "beta" or "not implemente
 <a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release Notes</h2>
 
 <p>This section will cover the newest release, for the rest of the changelog,
-please visit the <a href="CHANGELOG.md">CHANGELOG.md</a></p>
+please visit the <a href="https://github.com/buehler/typescript-hero/blob/master/CHANGELOG.md">CHANGELOG</a></p>
 
-<p>TODO.</p>
+<h3>
+<a id="060" class="anchor" href="#060" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[0.6.0]</h3>
+
+<h4>
+<a id="added" class="anchor" href="#added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Added</h4>
+
+<ul>
+<li>Command to add an import from a symbol under the current cursor (<a href="https://github.com/buehler/typescript-hero/issues/22">#22</a>)</li>
+</ul>
+
+<h4>
+<a id="changed" class="anchor" href="#changed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changed</h4>
+
+<ul>
+<li>Complete indexing / parsing engine was rewritten</li>
+<li>Adding an import does not automatically organize the imports afterwards (<a href="https://github.com/buehler/typescript-hero/issues/22">#22</a>, <a href="https://github.com/buehler/typescript-hero/issues/23">#23</a>)</li>
+</ul>
+
+<h4>
+<a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fixed</h4>
+
+<ul>
+<li>Exports were not recursively merged (<a href="https://github.com/buehler/typescript-hero/issues/25">#25</a>)</li>
+<li>Imports should be added with forwardslashes (<a href="https://github.com/buehler/typescript-hero/issues/19">#19</a>)</li>
+<li>Imports are vanishing when usings are PropertyAssignments (<a href="https://github.com/buehler/typescript-hero/issues/27">#27</a>)</li>
+<li>Imports are vanishing on organize imports (<a href="https://github.com/buehler/typescript-hero/issues/30">#30</a>)</li>
+</ul>
       </section>
 
     </div>
