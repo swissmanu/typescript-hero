@@ -55,6 +55,7 @@ work with typescript.</p>
 <ul>
 <li>Add imports of your project or libraries to your current file</li>
 <li>Add an import for the current name under the cursor</li>
+<li>CodeCompletionProvider that suggests symbols and automatically adds the needed imports</li>
 <li>Sort and organize your imports (sort and remove unused)</li>
 <li>Restart your debug session when your code changes</li>
 </ul>
@@ -74,27 +75,27 @@ work with typescript.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>showCmdGui</code></td>
+<td>showCmdGui</td>
 <td>general</td>
 <td>Shows a small gui with all awailable internal commands</td>
 </tr>
 <tr>
-<td><code>resolve.addImport</code></td>
+<td>resolve.addImport</td>
 <td>import resolver</td>
 <td>Shows a pick list with all recognized, importable symbols</td>
 </tr>
 <tr>
-<td><code>resolve.addImportUnderCursor</code></td>
+<td>resolve.addImportUnderCursor</td>
 <td>import resolver</td>
 <td>Imports the symbol under the cursor</td>
 </tr>
 <tr>
-<td><code>resolve.organizeImports</code></td>
+<td>resolve.organizeImports</td>
 <td>import resolver</td>
 <td>Removes unused imports and orders all imports</td>
 </tr>
 <tr>
-<td><code>resolve.rebuildCache</code></td>
+<td>resolve.rebuildCache</td>
 <td>import resolver</td>
 <td>Rebuilds the whole symbol cache (or index)</td>
 </tr>
@@ -115,19 +116,19 @@ work with typescript.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>showCmdGui</code></td>
+<td>showCmdGui</td>
 <td><code>ctrl+alt+g</code></td>
 </tr>
 <tr>
-<td><code>resolve.addImport</code></td>
+<td>resolve.addImport</td>
 <td><code>ctrl+alt+i</code></td>
 </tr>
 <tr>
-<td><code>resolve.addImportUnderCursor</code></td>
+<td>resolve.addImportUnderCursor</td>
 <td><code>ctrl+alt+shift+i</code></td>
 </tr>
 <tr>
-<td><code>resolve.organizeImports</code></td>
+<td>resolve.organizeImports</td>
 <td><code>ctrl+alt+o</code></td>
 </tr>
 </tbody>
@@ -155,7 +156,7 @@ settings that are not listed here, that means they are "beta" or "not implemente
 </thead>
 <tbody>
 <tr>
-<td><code>verbosity</code></td>
+<td>verbosity</td>
 <td>The log level that the extension writes its messages to the output channel</td>
 </tr>
 </tbody>
@@ -176,16 +177,20 @@ settings that are not listed here, that means they are "beta" or "not implemente
 </thead>
 <tbody>
 <tr>
-<td><code>pathStringDelimiter</code></td>
+<td>pathStringDelimiter</td>
 <td>The string delimiter to use for the imports</td>
 </tr>
 <tr>
-<td><code>ignorePatterns</code></td>
+<td>ignorePatterns</td>
 <td>If any of these strings is part of a file path, the file is ignored</td>
 </tr>
 <tr>
-<td><code>insertSpaceBeforeAndAfterImportBraces</code></td>
+<td>insertSpaceBeforeAndAfterImportBraces</td>
 <td>If the extension should place spaces into import braces (<code>{Symbol}</code> vs <code>{ Symbol }</code>)</td>
+</tr>
+<tr>
+<td>minCharactersForCompletion</td>
+<td>The minimum character count for the completion provider to get active</td>
 </tr>
 </tbody>
 </table>
@@ -205,11 +210,11 @@ settings that are not listed here, that means they are "beta" or "not implemente
 </thead>
 <tbody>
 <tr>
-<td><code>watchFolders</code></td>
+<td>watchFolders</td>
 <td>Which output folders should be watched to trigger a restart</td>
 </tr>
 <tr>
-<td><code>active</code></td>
+<td>active</td>
 <td>If true, the debug restart is activated on startup</td>
 </tr>
 </tbody>
@@ -227,31 +232,35 @@ settings that are not listed here, that means they are "beta" or "not implemente
 please visit the <a href="https://github.com/buehler/typescript-hero/blob/master/CHANGELOG.md">CHANGELOG</a></p>
 
 <h3>
-<a id="060" class="anchor" href="#060" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>[0.6.0]</h3>
+<a id="070" class="anchor" href="#070" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.7.0</h3>
 
 <h4>
 <a id="added" class="anchor" href="#added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Added</h4>
 
 <ul>
-<li>Command to add an import from a symbol under the current cursor (<a href="https://github.com/buehler/typescript-hero/issues/22">#22</a>)</li>
+<li>More tests! :-) (<a href="https://github.com/buehler/typescript-hero/issues/8">#8</a>)</li>
+<li>CodeCompletionProvider that autocompletes your symbols and adds the imports if necessary (<a href="https://github.com/buehler/typescript-hero/issues/5">#5</a>)</li>
+<li>Support for <code>*.tsx</code> files (<a href="https://github.com/buehler/typescript-hero/issues/42">#42</a>)</li>
 </ul>
 
 <h4>
 <a id="changed" class="anchor" href="#changed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changed</h4>
 
 <ul>
-<li>Complete indexing / parsing engine was rewritten</li>
-<li>Adding an import does not automatically organize the imports afterwards (<a href="https://github.com/buehler/typescript-hero/issues/22">#22</a>, <a href="https://github.com/buehler/typescript-hero/issues/23">#23</a>)</li>
+<li>Import under cursor does only import if it's an exact match (PR <a href="https://github.com/buehler/typescript-hero/pull/35">#35</a>)</li>
+<li>Own imports (workspace) are sorted to the top (<a href="https://github.com/buehler/typescript-hero/issues/37">#37</a>)</li>
+<li>Updated inversify to v2</li>
 </ul>
 
 <h4>
 <a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fixed</h4>
 
 <ul>
-<li>Exports were not recursively merged (<a href="https://github.com/buehler/typescript-hero/issues/25">#25</a>)</li>
-<li>Imports should be added with forwardslashes (<a href="https://github.com/buehler/typescript-hero/issues/19">#19</a>)</li>
-<li>Imports are vanishing when usings are PropertyAssignments (<a href="https://github.com/buehler/typescript-hero/issues/27">#27</a>)</li>
-<li>Imports are vanishing on organize imports (<a href="https://github.com/buehler/typescript-hero/issues/30">#30</a>)</li>
+<li>On Windows, forwardslashes will be used instead of backslashes (<a href="https://github.com/buehler/typescript-hero/issues/19">#19</a>) (definitly this time)</li>
+<li>
+<code>export xxx as yyy</code> does now correctly use the alias of the declaration (<a href="https://github.com/buehler/typescript-hero/issues/36">#36</a>)</li>
+<li>Build directories are ignored by default (for indexing) (<a href="https://github.com/buehler/typescript-hero/issues/48">#48</a>)</li>
+<li>Substructures import parent index.ts files correctly now (<a href="https://github.com/buehler/typescript-hero/issues/49">#49</a>)</li>
 </ul>
       </section>
 
