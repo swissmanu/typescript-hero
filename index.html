@@ -1,44 +1,25 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>Typescript Hero by buehler</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/buehler/typescript-hero">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/buehler/typescript-hero/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/buehler/typescript-hero/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    <section class="page-header">
+      <h1 class="project-name">Typescript Hero</h1>
+      <h2 class="project-tagline">VSCode extension that aids you with your everyday work around typescript</h2>
+      <a href="https://github.com/buehler/typescript-hero" class="btn">View on GitHub</a>
+      <a href="https://github.com/buehler/typescript-hero/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/buehler/typescript-hero/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
-          <h1>Typescript Hero</h1>
-          <p>VSCode extension that aids you with your everyday work around typescript</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/buehler">buehler</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="typescript-hero" class="anchor" href="#typescript-hero" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Typescript Hero</h1>
 
 <p>TypeScript Hero is a vscode extension that makes your live easier.
@@ -52,10 +33,12 @@ work with typescript.</p>
 <h2>
 <a id="features-at-a-glance" class="anchor" href="#features-at-a-glance" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features at a glance</h2>
 
+<p>Here is a brief list, of what TypeScript Hero is capable of:</p>
+
 <ul>
 <li>Add imports of your project or libraries to your current file</li>
 <li>Add an import for the current name under the cursor</li>
-<li>CodeCompletionProvider that suggests symbols and automatically adds the needed imports</li>
+<li>Intellisense that suggests symbols and automatically adds the needed imports</li>
 <li>Sort and organize your imports (sort and remove unused)</li>
 <li>Restart your debug session when your code changes</li>
 </ul>
@@ -188,6 +171,14 @@ settings that are not listed here, that means they are "beta" or "not implemente
 <td>insertSpaceBeforeAndAfterImportBraces</td>
 <td>If the extension should place spaces into import braces (<code>{Symbol}</code> vs <code>{ Symbol }</code>)</td>
 </tr>
+<tr>
+<td>multiLineWrapThreshold</td>
+<td>The threshold, when imports are converted into multiline imports</td>
+</tr>
+<tr>
+<td>newImportLocation</td>
+<td>The location of new imports (at the top of the file, or at the cursor location)</td>
+</tr>
 </tbody>
 </table>
 
@@ -228,20 +219,37 @@ settings that are not listed here, that means they are "beta" or "not implemente
 please visit the <a href="https://github.com/buehler/typescript-hero/blob/master/CHANGELOG.md">CHANGELOG</a></p>
 
 <h3>
-<a id="071" class="anchor" href="#071" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.7.1</h3>
+<a id="080" class="anchor" href="#080" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.8.0</h3>
+
+<h4>
+<a id="added" class="anchor" href="#added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Added</h4>
+
+<ul>
+<li>Support for multiline imports (<a href="https://github.com/buehler/typescript-hero/issues/60">#60</a>)</li>
+<li>Added setting for multiline threshold</li>
+<li>Configurable new import location (at top of the file or at the cursor position) (<a href="https://github.com/buehler/typescript-hero/issues/41">#41</a>)</li>
+<li>Asks for alias if a specifier is already present (<a href="https://github.com/buehler/typescript-hero/issues/44">#44</a>)</li>
+</ul>
 
 <h4>
 <a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fixed</h4>
 
 <ul>
-<li>Code completions does show when user types (<a href="https://github.com/buehler/typescript-hero/issues/55">#55</a>)</li>
-<li>Default exports and imports are working (<a href="https://github.com/buehler/typescript-hero/issues/40">#40</a>)</li>
-<li>New created files are correctly indexed now (<a href="https://github.com/buehler/typescript-hero/issues/46">#46</a>)</li>
+<li>Autocomplete does not suggest items that are already imported (<a href="https://github.com/buehler/typescript-hero/issues/64">#64</a>)</li>
+<li>Autocomplete does not suggest items of the own file (<a href="https://github.com/buehler/typescript-hero/issues/61">#61</a>)</li>
+<li>Does not generate duplicates when multiline imports are used (<a href="https://github.com/buehler/typescript-hero/issues/43">#43</a>)</li>
+<li>Multiline imports were not working with multiple imports</li>
+<li>Autocomplete does not add other classes from a file as well</li>
 </ul>
-      </section>
 
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/buehler/typescript-hero">Typescript Hero</a> is maintained by <a href="https://github.com/buehler">buehler</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
