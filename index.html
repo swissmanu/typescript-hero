@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="typescript-hero" class="anchor" href="#typescript-hero" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Typescript Hero</h1>
+<a id="typescript-hero" class="anchor" href="#typescript-hero" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TypeScript Hero</h1>
 
 <p>TypeScript Hero is a vscode extension that makes your live easier.
 When you are coding a lot of <code>TypeScript</code> you may want vscode to automatically
@@ -81,6 +81,11 @@ work with typescript.</p>
 <td>resolve.rebuildCache</td>
 <td>import resolver</td>
 <td>Rebuilds the whole symbol cache (or index)</td>
+</tr>
+<tr>
+<td>restartDebugger.toggle</td>
+<td>debug restarter</td>
+<td>Toggles the active state of the debug restarter</td>
 </tr>
 </tbody>
 </table>
@@ -219,27 +224,37 @@ settings that are not listed here, that means they are "beta" or "not implemente
 please visit the <a href="https://github.com/buehler/typescript-hero/blob/master/CHANGELOG.md">CHANGELOG</a></p>
 
 <h3>
-<a id="080" class="anchor" href="#080" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.8.0</h3>
+<a id="090" class="anchor" href="#090" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.9.0</h3>
 
 <h4>
 <a id="added" class="anchor" href="#added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Added</h4>
 
 <ul>
-<li>Support for multiline imports (<a href="https://github.com/buehler/typescript-hero/issues/60">#60</a>)</li>
-<li>Added setting for multiline threshold</li>
-<li>Configurable new import location (at top of the file or at the cursor position) (<a href="https://github.com/buehler/typescript-hero/issues/41">#41</a>)</li>
-<li>Asks for alias if a specifier is already present (<a href="https://github.com/buehler/typescript-hero/issues/44">#44</a>)</li>
+<li>Typescript symbols know their positions (resources, declarations, imports, exports)</li>
+<li>Statusbar item for the state of the debug restarter (<a href="https://github.com/buehler/typescript-hero/issues/85">#85</a>)</li>
+<li>Import a default export does suggest a name (<a href="https://github.com/buehler/typescript-hero/issues/71">#71</a>)</li>
+<li>Support for <code>@types</code> style definitions of TS2.0 (<a href="https://github.com/buehler/typescript-hero/issues/77">#77</a>)</li>
+</ul>
+
+<h4>
+<a id="changed" class="anchor" href="#changed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changed</h4>
+
+<ul>
+<li>Upgrade to TS2.0 (<a href="https://github.com/buehler/typescript-hero/issues/88">#88</a>)</li>
+<li>Default value of <code>typescriptHero.resolver.insertSpaceBeforeAndAfterImportBraces</code> is <code>true</code> now</li>
 </ul>
 
 <h4>
 <a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fixed</h4>
 
 <ul>
-<li>Autocomplete does not suggest items that are already imported (<a href="https://github.com/buehler/typescript-hero/issues/64">#64</a>)</li>
-<li>Autocomplete does not suggest items of the own file (<a href="https://github.com/buehler/typescript-hero/issues/61">#61</a>)</li>
-<li>Does not generate duplicates when multiline imports are used (<a href="https://github.com/buehler/typescript-hero/issues/43">#43</a>)</li>
-<li>Multiline imports were not working with multiple imports</li>
-<li>Autocomplete does not add other classes from a file as well</li>
+<li>New imports will be below <code>"use strict"</code> if it's the first line (<a href="https://github.com/buehler/typescript-hero/issues/73">#73</a>)</li>
+<li>Multiline imports respect <code>editor.tabSize</code> (<a href="https://github.com/buehler/typescript-hero/issues/74">#74</a>)</li>
+<li>Reload index when configuration of the ignore patterns changed (<a href="https://github.com/buehler/typescript-hero/issues/75">#75</a>)</li>
+<li>Autocomplete filters local file usages (<a href="https://github.com/buehler/typescript-hero/issues/69">#69</a>)</li>
+<li>Default exports do not break extension anymore (<a href="https://github.com/buehler/typescript-hero/issues/79">#79</a>)</li>
+<li>Node pathes are correctly split (<a href="https://github.com/buehler/typescript-hero/issues/76">#76</a>)</li>
+<li>Exports from root index.ts are not empty</li>
 </ul>
 
       <footer class="site-footer">
