@@ -38,10 +38,22 @@ work with typescript.</p>
 <ul>
 <li>Add imports of your project or libraries to your current file</li>
 <li>Add an import for the current name under the cursor</li>
+<li>Add all missing imports of a file with one command</li>
 <li>Intellisense that suggests symbols and automatically adds the needed imports</li>
+<li>"Light bulb feature" that fixes code you wrote (aka adds imports if you missed them, more to come.)</li>
 <li>Sort and organize your imports (sort and remove unused)</li>
 <li>Restart your debug session when your code changes</li>
 </ul>
+
+<h5>
+<a id="some-badges--" class="anchor" href="#some-badges--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some badges :-)</h5>
+
+<p><a href="https://travis-ci.org/buehler/typescript-hero"><img src="https://img.shields.io/travis/buehler/typescript-hero.svg" alt="Travis"></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero"><img src="http://vsmarketplacebadge.apphb.com/version-short/rbbit.typescript-hero.svg" alt="Marketplace"></a>
+<a href="https://marketplace.visualstudio.com/items?itemName=rbbit.typescript-hero"><img src="http://vsmarketplacebadge.apphb.com/installs/rbbit.typescript-hero.svg" alt="Installs"></a>
+<a href="https://github.com/buehler/typescript-hero/issues"><img src="https://img.shields.io/github/issues/buehler/typescript-hero.svg" alt="GitHub issues"></a>
+<a href="https://github.com/buehler/typescript-hero/pulls"><img src="https://img.shields.io/github/issues-pr/buehler/typescript-hero.svg" alt="GitHub pull requests"></a>
+<a href="https://github.com/buehler/typescript-hero"><img src="https://img.shields.io/github/license/buehler/typescript-hero.svg" alt="license"></a></p>
 
 <h2>
 <a id="commands" class="anchor" href="#commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Commands</h2>
@@ -60,7 +72,7 @@ work with typescript.</p>
 <tr>
 <td>showCmdGui</td>
 <td>general</td>
-<td>Shows a small gui with all awailable internal commands</td>
+<td>Shows a small gui with all available internal commands</td>
 </tr>
 <tr>
 <td>resolve.addImport</td>
@@ -71,6 +83,11 @@ work with typescript.</p>
 <td>resolve.addImportUnderCursor</td>
 <td>import resolver</td>
 <td>Imports the symbol under the cursor</td>
+</tr>
+<tr>
+<td>resolve.addMissingImports</td>
+<td>import resolver</td>
+<td>Imports all missing symbols for the actual document</td>
 </tr>
 <tr>
 <td>resolve.organizeImports</td>
@@ -216,46 +233,6 @@ settings that are not listed here, that means they are "beta" or "not implemente
 <a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Known Issues</h2>
 
 <p>Please visit <a href="https://github.com/buehler/typescript-hero/issues">the issue list</a> :-)</p>
-
-<h2>
-<a id="release-notes" class="anchor" href="#release-notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release Notes</h2>
-
-<p>This section will cover the newest release, for the rest of the changelog,
-please visit the <a href="https://github.com/buehler/typescript-hero/blob/master/CHANGELOG.md">CHANGELOG</a></p>
-
-<h3>
-<a id="090" class="anchor" href="#090" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>0.9.0</h3>
-
-<h4>
-<a id="added" class="anchor" href="#added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Added</h4>
-
-<ul>
-<li>Typescript symbols know their positions (resources, declarations, imports, exports)</li>
-<li>Statusbar item for the state of the debug restarter (<a href="https://github.com/buehler/typescript-hero/issues/85">#85</a>)</li>
-<li>Import a default export does suggest a name (<a href="https://github.com/buehler/typescript-hero/issues/71">#71</a>)</li>
-<li>Support for <code>@types</code> style definitions of TS2.0 (<a href="https://github.com/buehler/typescript-hero/issues/77">#77</a>)</li>
-</ul>
-
-<h4>
-<a id="changed" class="anchor" href="#changed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changed</h4>
-
-<ul>
-<li>Upgrade to TS2.0 (<a href="https://github.com/buehler/typescript-hero/issues/88">#88</a>)</li>
-<li>Default value of <code>typescriptHero.resolver.insertSpaceBeforeAndAfterImportBraces</code> is <code>true</code> now</li>
-</ul>
-
-<h4>
-<a id="fixed" class="anchor" href="#fixed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fixed</h4>
-
-<ul>
-<li>New imports will be below <code>"use strict"</code> if it's the first line (<a href="https://github.com/buehler/typescript-hero/issues/73">#73</a>)</li>
-<li>Multiline imports respect <code>editor.tabSize</code> (<a href="https://github.com/buehler/typescript-hero/issues/74">#74</a>)</li>
-<li>Reload index when configuration of the ignore patterns changed (<a href="https://github.com/buehler/typescript-hero/issues/75">#75</a>)</li>
-<li>Autocomplete filters local file usages (<a href="https://github.com/buehler/typescript-hero/issues/69">#69</a>)</li>
-<li>Default exports do not break extension anymore (<a href="https://github.com/buehler/typescript-hero/issues/79">#79</a>)</li>
-<li>Node pathes are correctly split (<a href="https://github.com/buehler/typescript-hero/issues/76">#76</a>)</li>
-<li>Exports from root index.ts are not empty</li>
-</ul>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/buehler/typescript-hero">Typescript Hero</a> is maintained by <a href="https://github.com/buehler">buehler</a>.</span>
