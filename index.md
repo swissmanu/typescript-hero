@@ -1,6 +1,6 @@
 # TypeScript Hero
 
-TypeScript Hero is a vscode extension that makes your live easier.
+TypeScript Hero is a vscode extension that makes your life easier.
 When you are coding a lot of `TypeScript` you may want vscode to automatically
 include your imports.
 
@@ -18,7 +18,6 @@ Here is a brief list, of what TypeScript Hero is capable of (more at the end):
 - Intellisense that suggests symbols and automatically adds the needed imports
 - "Light bulb feature" that fixes code you wrote
 - Sort and organize your imports (sort and remove unused)
-- Restart your debug session when your code changes
 
 ##### Some badges :-)
 
@@ -35,13 +34,11 @@ All commands are preceeded by `typescriptHero`.
 
 | Command                      | Extension part  | Description                                               |
 | ---------------------------- | --------------- | --------------------------------------------------------- |
-| showCmdGui                   | general         | Shows a small gui with all available internal commands    |
 | resolve.addImport            | import resolver | Shows a pick list with all recognized, importable symbols |
 | resolve.addImportUnderCursor | import resolver | Imports the symbol under the cursor                       |
 | resolve.addMissingImports    | import resolver | Imports all missing symbols for the actual document       |
 | resolve.organizeImports      | import resolver | Removes unused imports and orders all imports             |
 | resolve.rebuildCache         | import resolver | Rebuilds the whole symbol cache (or index)                |
-| restartDebugger.toggle       | debug restarter | Toggles the active state of the debug restarter           |
 
 ## Keybindings
 
@@ -49,9 +46,9 @@ The following commands are bound by default when the extension is installed.
 
 | Command                      | Keybinding         |
 | ---------------------------- | ------------------ |
-| showCmdGui                   | `ctrl+alt+g`       |
-| resolve.addImport            | `ctrl+alt+i`       |
-| resolve.addImportUnderCursor | `ctrl+alt+shift+i` |
+| resolve.addImport            | `ctrl+shift+i`     |
+| resolve.addImportUnderCursor | `ctrl+alt+i`       |
+| resolve.addMissingImports    | `ctrl+alt+shift+i` |
 | resolve.organizeImports      | `ctrl+alt+o`       |
 
 ## Settings
@@ -72,25 +69,18 @@ These settings do not have a prefix.
 ### Import resolver
 
 The following settings do have the prefix `resolver`. So an example setting could be
-`typescriptHero.resolver.pathStringDelimiter`.
+`typescriptHero.resolver.stringQuoteStyle`.
 
 | Setting                               | Description                                                                          |
 | ------------------------------------- | ------------------------------------------------------------------------------------ |
-| pathStringDelimiter                   | The string delimiter to use for the imports                                          |
+| stringQuoteStyle                      | The string delimiter to use for the imports (`'` or `"`)                             |
 | ignorePatterns                        | If any of these strings is part of a file path, the file is ignored                  |
 | insertSpaceBeforeAndAfterImportBraces | If the extension should place spaces into import braces (`{Symbol}` vs `{ Symbol }`) |
+| insertSemicolons                      | If the extension should add a semicolon to the end of a statement                    |
 | multiLineWrapThreshold                | The threshold, when imports are converted into multiline imports                     |
-| newImportLocation                     | The location of new imports (at the top of the file, or at the cursor location)      |
-
-### Debug session restarter
-
-The following settings do have the prefix `restartDebugger`. So an example setting could be
-`typescriptHero.restartDebugger.watchFolders`.
-
-| Setting      | Description                                                 |
-| ------------ | ----------------------------------------------------------- |
-| watchFolders | Which output folders should be watched to trigger a restart |
-| active       | If true, the debug restart is activated on startup          |
+| multiLineTrailingComma                | When multiline imports are created, `true` inserts a trailing comma to the last line |
+| disableImportSorting                  | Disable sorting during organize imports action                                       |
+| importGroups                          | The groups that are used for sorting the imports (description below)                 |
 
 ## Features (extended)
 
@@ -102,6 +92,91 @@ TypeScript Hero can manage your imports. It is capable of:
 - Import something that is beneath your current cursor position (and ask you if it's not sure which one)
 - Import all missing identifiers of the current file
 - Remove unused imports and sort the remaining ones by alphabet
+
+#### Import groups
+
+The import groups setting allows you to order all your imports as you may want. The settings is an array of elements.
+An element can either be a string (with a certain keyword or a regex like string) or an object that contains an
+identifier (with a certain keyword or a regex like string) and a sort order. The order you enter those objects / string
+does matter since it is used to define the import groups.
+
+An example (complex) could be:
+
+```json
+[
+    "Plains",
+    "/@angular/",
+    {
+        "identifier": "/Foo[1-9]Bar/",
+        "order": "desc"
+    },
+    "Workspace",
+    {
+        "identifier": "Remaining",
+        "order": "desc"
+    }
+]
+```
+
+##### Keyword imports
+
+- `Modules` : contains all imports from modules (npm etc) `import ... from 'vscode';`
+- `Plains` : contains all string only imports `import 'reflect-metadata;`
+- `Workspace` : contains all local project files `import ... from '../server';`
+- `Remaining` : contains all imports that are not matched by other import groups
+
+(_hint_: The `Remaining` group is added implicitly as the last import group if not added specifically)
+
+The default is as follows:
+
+```json
+[
+    "Plains",
+    "Modules",
+    "Workspace"
+]
+```
+
+For everybody that just wants all imports ordered in asc or desc, just overwrite the default with:
+
+For all imports sorted asc:
+```json
+[]
+```
+
+For all imports sorted desc:
+```json
+[
+    {
+        "identifier": "Remaining",
+        "order": "desc"
+    }
+]
+```
+
+##### Regex imports
+
+The regex import group contains a regex string. Let's say you want to group all your `@angular` namespaced imports together
+in one group you'd use `/@angular/` as "identifier" (either in the object when you want to change the order or just
+the plain regex since default order is `asc`).
+
+(_hint_: only the name of the library is matched against the regex)
+
+```json
+[
+    "/@angular/"
+]
+```
+
+The setting above would create two groups: one with all @angular imports another with all other imports.
+
+```typescript
+import {http} from '@angular/http';
+import {component} from '@angular/core';
+
+import 'reflect-metadata';
+import {Server} from './server';
+```
 
 ### Intellisense
 
@@ -117,11 +192,6 @@ TypeScript Hero offers the following fix actions:
 - Detect a missing import and offer to add all missing imports to the file
 - Detect missing methods / properties of an interface that you implemented and implement them for you (implement interface refactoring)
 - Detect missing abstract methods of an extended abstract class and implement them for you (implement abstract class refactoring)
-
-### Debug restarter
-
-TypeScript Hero does detect changes to configurable directories in your workspace and restarts the
-debugger (if it's running) after a short delay (actually calls the `restartDebugger` command).
 
 ## Known Issues
 
