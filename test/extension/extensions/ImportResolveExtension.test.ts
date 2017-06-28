@@ -155,7 +155,7 @@ describe('ImportResolveExtension', () => {
             await vscode.window.activeTextEditor!.edit((builder) => {
                 builder.insert(
                     new vscode.Position(0, 0),
-                    'import { barrelContentA } from "../../../server/indices/barrel";',
+                    'import { barrelContentA } from \'../../../server/indices/barrel\';',
                 );
             });
 
@@ -166,8 +166,8 @@ describe('ImportResolveExtension', () => {
             });
             await extension.addImportToDocument(items[0]);
 
-            document.getText().should.equal(
-                'import { barrelContentA, barrelContentB } from "../../../server/indices/barrel";',
+            document.getText().trim().should.equal(
+                'import { barrelContentA, barrelContentB } from \'../../../server/indices/barrel\';',
             );
         });
 
@@ -198,19 +198,16 @@ describe('ImportResolveExtension', () => {
             await vscode.window.activeTextEditor!.edit((builder) => {
                 builder.insert(
                     new vscode.Position(0, 0),
-                    'import { barrelContentA } from "../../../server/indices/barrel";',
-                );
-                builder.insert(
-                    new vscode.Position(1, 0),
-                    'console.log(barrelContentA, new MyClass());',
-                );
+                    `import { barrelContentA } from '../../../server/indices/barrel';
+console.log(barrelContentA, new MyClass());`);
             });
 
             await extension.addMissingImports();
 
             document.getText().should.equal(
-`import { barrelContentA } from "../../../server/indices/barrel";
-import { MyClass } from "../../../server/indices/MyClass";
+`import { barrelContentA } from '../../../server/indices/barrel';
+import { MyClass } from '../../../server/indices/MyClass';
+
 console.log(barrelContentA, new MyClass());`,
             );
         });

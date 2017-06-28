@@ -15,7 +15,7 @@ import { FileChangeType, FileEvent } from 'vscode-languageserver';
 /**
  * Returns the name of the node folder. Is used as the library name for indexing.
  * (e.g. ./node_modules/webpack returns webpack)
- * 
+ *
  * @param {string} path
  * @returns {string}
  */
@@ -36,7 +36,7 @@ type Resources = { [name: string]: Resource };
 /**
  * Global index of typescript declarations. Contains declarations and origins.
  * Provides reverse index for search and declaration info for imports.
- * 
+ *
  * @export
  * @class DeclarationIndex
  */
@@ -57,7 +57,7 @@ export class DeclarationIndex {
 
     /**
      * Declaration index. Reverse index from a name to many declarations assotiated to the name.
-     * 
+     *
      * @private
      * @type {(DeclarationInfoIndex | undefined)}
      * @memberof DeclarationIndex
@@ -66,7 +66,7 @@ export class DeclarationIndex {
 
     /**
      * Indicator if the first index was loaded and calculated or not.
-     * 
+     *
      * @readonly
      * @type {boolean}
      * @memberof DeclarationIndex
@@ -77,7 +77,7 @@ export class DeclarationIndex {
 
     /**
      * Reverse index of the declarations.
-     * 
+     *
      * @readonly
      * @type {(DeclarationInfoIndex | undefined)}
      * @memberof DeclarationIndex
@@ -88,8 +88,8 @@ export class DeclarationIndex {
 
     /**
      * List of all declaration information. Contains the typescript declaration and the
-     * "from" information (from where the symbol is imported). 
-     * 
+     * "from" information (from where the symbol is imported).
+     *
      * @readonly
      * @type {DeclarationInfo[]}
      * @memberof DeclarationIndex
@@ -112,7 +112,7 @@ export class DeclarationIndex {
     /**
      * Resets the whole index. Does delete everything. Period.
      * Is useful for unit testing or similar things.
-     * 
+     *
      * @memberof DeclarationIndex
      */
     public reset(): void {
@@ -124,11 +124,11 @@ export class DeclarationIndex {
     /**
      * Tells the index to build a new index.
      * Can be canceled with a cancellationToken.
-     * 
+     *
      * @param {string[]} filePathes
      * @param {string} rootPath
      * @returns {Promise<void>}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     public async buildIndex(filePathes: string[], rootPath: string): Promise<void> {
@@ -157,10 +157,10 @@ export class DeclarationIndex {
 
     /**
      * Is called when file events happen. Does reindex for the changed files and creates a new index.
-     * 
+     *
      * @param {FileEvent[]} changes
      * @returns {Promise<void>}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     public async reindexForChanges(changes: FileEvent[], rootPath: string): Promise<void> {
@@ -210,12 +210,12 @@ export class DeclarationIndex {
 
     /**
      * Returns a list of files that export a certain resource (declaration).
-     * 
+     *
      * @private
      * @param {string} resourceToCheck
      * @param {string} rootPath
      * @returns {string[]}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private getExportedResources(resourceToCheck: string, rootPath: string): string[] {
@@ -235,13 +235,13 @@ export class DeclarationIndex {
     /**
      * Checks if a file does export another resource.
      * (i.e. export ... from ...)
-     * 
+     *
      * @private
      * @param {File} resource The file that is checked
      * @param {string} resourcePath The resource that is searched for
      * @param {string} rootPath The rootpath of the workspace
      * @returns {boolean}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private doesExportResource(resource: File, resourcePath: string, rootPath: string): boolean {
@@ -268,7 +268,7 @@ export class DeclarationIndex {
      * @param {string} rootPath
      * @param {File[]} [files=[]]
      * @returns {Promise<Resources>}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private async parseResources(rootPath: string, files: File[] = []): Promise<Resources> {
@@ -301,11 +301,11 @@ export class DeclarationIndex {
     /**
      * Creates a reverse index out of the give resources.
      * Can be cancelled with the token.
-     * 
+     *
      * @private
      * @param {Resources} resources
      * @returns {Promise<ResourceIndex>}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private async createIndex(resources: Resources): Promise<DeclarationInfoIndex> {
@@ -315,6 +315,7 @@ export class DeclarationIndex {
 
         for (const key of Object.keys(resources)) {
             const resource = resources[key];
+
             if (resource instanceof Namespace || resource instanceof Module) {
                 if (!index[resource.name]) {
                     index[resource.name] = [];
@@ -324,6 +325,7 @@ export class DeclarationIndex {
                     resource.name,
                 ));
             }
+
             for (const declaration of resource.declarations) {
                 if (!index[declaration.name]) {
                     index[declaration.name] = [];
@@ -336,20 +338,21 @@ export class DeclarationIndex {
                 }
             }
         }
+
         return index;
     }
 
     /**
      * Process all exports of a the parsed resources. Does move the declarations accordingly to their
      * export nature.
-     * 
+     *
      * @private
      * @param {string} rootPath
      * @param {Resources} parsedResources
      * @param {Resource} resource
      * @param {Resource[]} [processedResources=[]]
      * @returns {void}
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private processResourceExports(
@@ -376,6 +379,9 @@ export class DeclarationIndex {
                     sourceLib = '/' + relative(rootPath, sourceLib).replace(/([.]d)?[.]tsx?/g, '');
                 }
 
+                if (!parsedResources[sourceLib]) {
+                    sourceLib = sourceLib + '/index';
+                }
                 if (!parsedResources[sourceLib]) {
                     return;
                 }
@@ -407,14 +413,18 @@ export class DeclarationIndex {
     /**
      * Processes an all export, does move the declarations accordingly.
      * (i.e. export * from './myFile')
-     * 
+     *
      * @private
      * @param {Resource} exportingLib
      * @param {Resource} exportedLib
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private processAllFromExport(exportingLib: Resource, exportedLib: Resource): void {
+        // TODO is this really the way to go? reexported declarations are now only exported by the AllExport and not by
+        //      their actual exporter.
+        // TODO start/end of the export references to the actual declaration, not the reexport. Due lack of clone()
+        //      support in *Declaration, this needs more effort to solve.
         exportingLib.declarations.push(...exportedLib.declarations);
         exportedLib.declarations = [];
     }
@@ -422,12 +432,12 @@ export class DeclarationIndex {
     /**
      * Processes a named export, does move the declarations accordingly.
      * (i.e. export {MyClass} from './myFile')
-     * 
+     *
      * @private
      * @param {NamedExport} tsExport
      * @param {Resource} exportingLib
      * @param {Resource} exportedLib
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private processNamedFromExport(
@@ -452,11 +462,11 @@ export class DeclarationIndex {
     /**
      * Processes an assigned export, does move the declarations accordingly.
      * (i.e. export = namespaceName)
-     * 
+     *
      * @private
      * @param {AssignedExport} tsExport
      * @param {Resource} exportingLib
-     * 
+     *
      * @memberof DeclarationIndex
      */
     private processAssignedExport(
