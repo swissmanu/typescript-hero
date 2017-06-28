@@ -49,6 +49,18 @@ describe('ImportResolveExtension', () => {
                     vscode.workspace.rootPath!,
                     'extension/extensions/importResolveExtension/sameDirectory.ts',
                 ),
+                join(
+                    vscode.workspace.rootPath!,
+                    'server/indices/barrel/index.ts',
+                ),
+                join(
+                    vscode.workspace.rootPath!,
+                    'server/indices/barrel/a/index.ts',
+                ),
+                join(
+                    vscode.workspace.rootPath!,
+                    'server/indices/barrel/b/index.ts',
+                ),
             ],
             vscode.workspace.rootPath!,
         );
@@ -81,7 +93,7 @@ describe('ImportResolveExtension', () => {
         it('shoud write a module / namespace import correctly', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'bodyParser',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
@@ -91,7 +103,7 @@ describe('ImportResolveExtension', () => {
         it('shoud write a named import correctly', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'Class1',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
@@ -101,7 +113,7 @@ describe('ImportResolveExtension', () => {
         it('shoud update a named import correcty', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'Class',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
@@ -112,7 +124,7 @@ describe('ImportResolveExtension', () => {
         it('shoud use the correct relative path', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'Class1',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
@@ -122,7 +134,7 @@ describe('ImportResolveExtension', () => {
         it('shoud only use forward slashes', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'SubFileLevel3',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
@@ -132,11 +144,28 @@ describe('ImportResolveExtension', () => {
         it('shoud use ./ for same directory files', async () => {
             const items = await extension.getDeclarationsForImport({
                 cursorSymbol: 'AddImportSameDirectory',
-                documentSource: '', 
+                documentSource: '',
                 docuemntPath: document.fileName,
             });
             await extension.addImportToDocument(items[0]);
             document.getText().should.match(/\.\/sameDirectory/);
+        });
+
+        it('should use shallowest export when exported multiple times in a directory branch', async () => {
+            await vscode.window.activeTextEditor!.edit((b) => {
+                b.insert(new vscode.Position(0, 0), 'import { barrelContentA } from "../../../server/indices/barrel";');
+            });
+
+            const items = await extension.getDeclarationsForImport({
+                cursorSymbol: 'barrelContentB',
+                documentSource: '',
+                docuemntPath: document.fileName,
+            });
+            await extension.addImportToDocument(items[0]);
+
+            document.getText().should.equal(
+                'import { barrelContentA, barrelContentB } from "../../../server/indices/barrel";',
+            );
         });
 
     });
