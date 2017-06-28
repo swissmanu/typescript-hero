@@ -152,8 +152,11 @@ describe('ImportResolveExtension', () => {
         });
 
         it('should use shallowest export when exported multiple times in a directory branch', async () => {
-            await vscode.window.activeTextEditor!.edit((b) => {
-                b.insert(new vscode.Position(0, 0), 'import { barrelContentA } from "../../../server/indices/barrel";');
+            await vscode.window.activeTextEditor!.edit((builder) => {
+                builder.insert(
+                    new vscode.Position(0, 0),
+                    'import { barrelContentA } from "../../../server/indices/barrel";',
+                );
             });
 
             const items = await extension.getDeclarationsForImport({
@@ -168,6 +171,49 @@ describe('ImportResolveExtension', () => {
             );
         });
 
+    });
+
+    describe('addMissingImports', () => {
+        const file = join(
+            vscode.workspace.rootPath!,
+            'extension/extensions/importResolveExtension/addImportToDocument.ts',
+        );
+        let document: vscode.TextDocument;
+
+        before(async () => {
+            document = await vscode.workspace.openTextDocument(file);
+            await vscode.window.showTextDocument(document);
+        });
+
+        afterEach(async () => {
+            await vscode.window.activeTextEditor!.edit((builder) => {
+                builder.delete(new vscode.Range(
+                    new vscode.Position(0, 0),
+                    document.lineAt(document.lineCount - 1).rangeIncludingLineBreak.end,
+                ));
+            });
+        });
+
+        it('should only add missing imports', async () => {
+            await vscode.window.activeTextEditor!.edit((builder) => {
+                builder.insert(
+                    new vscode.Position(0, 0),
+                    'import { barrelContentA } from "../../../server/indices/barrel";',
+                );
+                builder.insert(
+                    new vscode.Position(1, 0),
+                    'console.log(barrelContentA, new MyClass());',
+                );
+            });
+
+            await extension.addMissingImports();
+
+            document.getText().should.equal(
+`import { barrelContentA } from "../../../server/indices/barrel";
+import { MyClass } from "../../../server/indices/MyClass";
+console.log(barrelContentA, new MyClass());`,
+            );
+        });
     });
 
     describe('organizeImports', () => {
